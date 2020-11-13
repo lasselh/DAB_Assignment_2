@@ -12,7 +12,7 @@ namespace DAB2
     {
         [Key]
         public int TestCenterID { get; set; }
-        public int Hours { get; set; }
+        public string Hours { get; set; }
         public List<TestCenterCitizen> testCenterCitizens { get; set; }
         public TestCenterManagement testcentermanagement { get; set; }
         public Municipality municipality { get; set; }

@@ -113,8 +113,8 @@ namespace DAB_Assignment_2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Hours")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Hours")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("MunicipalityID")
                         .HasColumnType("INTEGER");
