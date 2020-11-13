@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAB_Assignment_2.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20201113224749_MyDBContext.db")]
+    [Migration("20201113232238_MyDBContext.db")]
     partial class MyDBContextdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
