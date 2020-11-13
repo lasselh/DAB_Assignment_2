@@ -34,17 +34,84 @@ namespace DAB2
                     break;
             }
 
-            //do
-            //{
-            //    Console.WriteLine("Choose your option... \n" +
-            //                      " 1: Create Citizen\n" +
-            //                      " 2: Create Testcenter/Mangement\n" +
-            //                      " 3: Create Test Case\n" +
-            //                      " 4: Create Location\n");
-            //} while (true);
+            choice = 0;
+
+            do
+            {
+                Console.WriteLine("Choose your option... \n" +
+                                  " 1: Create Citizen\n" +
+                                  " 2: Create Testcenter\n" +
+                                  " 3: Create Mangement\n" +
+                                  " 4: Create Test Case\n" +
+                                  " 5: Create Location\n");
+
+                choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        createCitizen();
+                        break;
+
+                    case 2:
+                        createTestCenter();
+                        break;
+
+                    case 3:
+                        createManagement();
+                        break;
+
+                    case 4:
+                        createTestCase();
+                        break;
+
+                    case 5:
+                        createLocation();
+                        break;
+
+                }
+
+            } while (true);
         }
 
+        public static void createCitizen()
+        {
+            Console.Clear();
+            Console.WriteLine("Type in citizens firstname:\n");
+            string Firstname = Console.ReadLine();
 
+            Console.WriteLine("Type in citizens lastname:\n");
+            string Lastname = Console.ReadLine();
+
+            Console.WriteLine("Type in citizens age:\n");
+            int age = Console.Read();
+
+            Console.WriteLine("Type in citizens sex:\n");
+            string sex = Console.ReadLine();
+
+            Console.WriteLine("Type in citizens social security number (10 numbers)");
+            string SSN = Console.ReadLine();
+
+            Console.Write("Type ID of the municipality the citizen lives in:");
+            int municipalityID = Console.Read();
+
+            var CitizenAdd = new Citizen() { FirstName = Firstname, LastName = Lastname, Age = age, Sex = sex, SocialSecurityNumber = SSN, MunicipalityID = municipalityID };
+        }
+        public static void createTestCenter()
+        {
+
+        }
+        public static void createManagement()
+        {
+
+        }
+        public static void createTestCase()
+        {
+
+        }
+        public static void createLocation()
+        {
+
+        }
 
         /////////////////////////////////////////////
         /////////////////////////////////////////////
