@@ -32,11 +32,31 @@ namespace DAB2
         }
         public void createTestCenter()
         {
+            Console.Clear();
+            Console.WriteLine("Type the ID for the testcenter:\n");
+            int TestCenterID = Console.Read();
 
+            Console.WriteLine("Type the opening hours of the testcenter (fx. 8-16)");
+            string hours = Console.ReadLine();
+
+            Console.WriteLine("Type the MunicipalityID for the municipality in which the testcenter is");
+            int municipalityID = Console.Read();
+
+            var TestCenterAdd = new TestCenter() { TestCenterID = TestCenterID, Hours = hours, MunicipalityID = municipalityID };
         }
         public void createManagement()
         {
+            Console.Clear();
+            Console.WriteLine("Type in TestCenterManagements PhoneNumber:(8 digits)");
+            int phonenumber = Console.Read();
 
+            Console.WriteLine("Type in TestCenterManagements Email:");
+            string email = Console.ReadLine();
+
+            Console.WriteLine("Type in TestCenterID for the TestCenter that the this Management will manage:");
+            int testcenterid = Console.Read();
+
+            var TestCenterManagementAdd = new TestCenterManagement() { PhoneNumber = phonenumber, Email = email, TestCenterID = testcenterid };
         }
         public void createTestCase()
         {
@@ -44,7 +64,14 @@ namespace DAB2
         }
         public void createLocation()
         {
+            Console.Clear();
+            Console.WriteLine("Type in the address for the location:");
+            string address = Console.ReadLine();
 
+            Console.WriteLine("Type in the Municipality ID for the municipality the location is located in:");
+            int municipalityid = Console.Read();
+
+            var LocationAdd = new Location() { Address = address, MunicipalityID = municipalityid };
         }
     }
 }
