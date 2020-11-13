@@ -84,7 +84,7 @@ namespace DAB_Assignment_2.Migrations
                 {
                     TestCenterID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Hours = table.Column<int>(type: "INTEGER", nullable: false),
+                    Hours = table.Column<string>(type: "TEXT", nullable: true),
                     MunicipalityID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

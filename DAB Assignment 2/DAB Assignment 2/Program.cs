@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace DAB2
@@ -25,8 +26,8 @@ namespace DAB2
                 case 1:
                     Console.Clear();
                     ParseMunicipality();
-                    GenerateCitizens(100);
                     GenerateTestCenter(100);
+                    GenerateCitizens(100);
                     break;
 
                 case 2:
@@ -172,7 +173,6 @@ namespace DAB2
                 var gender = Genders[random.Next(Genders.Length)];
                 var age = random.Next(100);
                 var ssn = $"{getDate()}{getMonth()}{getYear(age)}{getControl()}";
-
                 var temp = random.Next(Municipalities.Count);
                 var mid = Municipalities[temp];
 
@@ -214,19 +214,24 @@ namespace DAB2
 
         public static void GenerateTestCenter(int number)
         {
-            var testcenter = new TestCenter();
-
-            for (int i = 0; i < number; i++)
+            for (int i = 1; i < (number+1); i++)
             {
+                var testcenter = new TestCenter();
                 testcenter.TestCenterID = i;
                 var temp = random.Next(Municipalities.Count);
                 testcenter.MunicipalityID = Municipalities[temp];
                 // hvad fuck er hours i TestCenter
-                testcenter.Hours = random.Next(1, 1000);
+                testcenter.Hours = "random.Next(1, 1000)";
 
                 db.Add(testcenter);
                 db.SaveChanges();
             }
+        }
+
+        public static void AddCitizenToTestCenter(string ssn, int testcenterid)
+        {
+            var cit = db.Citizen.Find(ssn);
+            var tcr = db.TestCenter.Find(testcenterid);
         }
     }
 }
