@@ -119,7 +119,7 @@ namespace DAB2
             }
         }
 
-        public static void AddCitizenToTestCenter(MyDBContext db, string ssn, int testcenterid, bool result, string status, string date)
+        public void AddCitizenToTestCenter(MyDBContext db, string ssn, int testcenterid, bool result, string status, string date)
         {
             var cit = db.Citizen.Find(ssn);
             var tcr = db.TestCenter.Find(testcenterid);
@@ -127,7 +127,6 @@ namespace DAB2
             var tcc = new TestCenterCitizen();
             tcc.SocialSecurityNumber = cit.SocialSecurityNumber;
             tcc.TestCenterID = tcr.TestCenterID;
-
         }
     }
 }
