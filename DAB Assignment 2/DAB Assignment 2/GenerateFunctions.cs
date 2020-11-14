@@ -4,6 +4,7 @@ using System.Text;
 using DAB2;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System.IO;
+using System.Linq;
 
 namespace DAB2
 {
@@ -74,7 +75,7 @@ namespace DAB2
         }
 
         /// <summary>
-        /// Generates set amount of citizens. Default 100.
+        /// fuck en nice måde at lave kommentarer på tester123
         /// </summary>
         /// <param name="db">DatabaseContext to add to</param>
         /// <param name="number">Amount of citizens to generate</param>
@@ -119,14 +120,35 @@ namespace DAB2
             }
         }
 
-        public void AddCitizenToTestCenter(MyDBContext db, string ssn, int testcenterid, bool result, string status, string date)
+        public void AddCitizenToTestCenter(MyDBContext db, int number = 100)
         {
-            var cit = db.Citizen.Find(ssn);
-            var tcr = db.TestCenter.Find(testcenterid);
+            for (int i = 0; i < number; i++)
+            {
+                int rcit = random.Next(db.Citizen.Count());
+                int rtcr = random.Next(db.TestCenter.Count());
 
-            var tcc = new TestCenterCitizen();
-            tcc.SocialSecurityNumber = cit.SocialSecurityNumber;
-            tcc.TestCenterID = tcr.TestCenterID;
+                var cit = db.Citizen.OrderBy(c => c.SocialSecurityNumber).Skip(i).Take(1).FirstOrDefault();
+                var tcr = db.TestCenter.OrderBy(c => c.TestCenterID).Skip(i).Take(1).FirstOrDefault();
+
+                var tcc = new TestCenterCitizen();
+                tcc.SocialSecurityNumber = cit.SocialSecurityNumber;
+                tcc.TestCenterID = tcr.TestCenterID;
+
+                int rnum = random.Next(100);
+                if (rnum < 50) {
+                    tcc.result = false;
+                    tcc.status = "Not Ready";
+                }
+                else {
+                    tcc.result = true;
+                    tcc.status = "Ready";
+                }
+
+                tcc.date = $"{getDate()}{getMonth()}{getYear(0)}";
+
+                db.Add(tcc);
+                db.SaveChanges();
+            }
         }
     }
 }

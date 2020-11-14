@@ -7,7 +7,7 @@ namespace DAB2
 {
     class CreateFunctions
     {
-        public void createCitizen()
+        public void createCitizen(MyDBContext db)
         {
             Console.Clear();
             Console.WriteLine("Type in citizens firstname:\n");
@@ -32,7 +32,7 @@ namespace DAB2
 
             Console.WriteLine("Citizen succesfully added!\n");
         }
-        public void createTestCenter()
+        public void createTestCenter(MyDBContext db)
         {
             Console.Clear();
             Console.WriteLine("Type the ID for the testcenter:\n");
@@ -48,7 +48,7 @@ namespace DAB2
 
             Console.WriteLine("TestCenter succesfully added!\n");
         }
-        public void createManagement()
+        public void createManagement(MyDBContext db)
         {
             Console.Clear();
             Console.WriteLine("Type in TestCenterManagements PhoneNumber:(8 digits):\n");
@@ -64,11 +64,54 @@ namespace DAB2
 
             Console.WriteLine("TestCenterManagement succesfully added!\n");
         }
-        public void createTestCase()
+        public void createTestCase(MyDBContext db, string ssn, int testcenterid)
         {
+            var cit = db.Citizen.Find(ssn);
+            var tcr = db.TestCenter.Find(testcenterid);
 
+            var tcc = new TestCenterCitizen();
+            tcc.SocialSecurityNumber = cit.SocialSecurityNumber;
+            tcc.TestCenterID = tcr.TestCenterID;
+
+            Console.Clear();
+            Console.WriteLine("Type the test result: " +
+                              "'P' for positive\n" +
+                              "'N' for negative/unknown\n" + 
+                              "Type result here: ");
+            string temp = Console.ReadLine();
+            int check = 0;
+            do
+            {
+                if (temp == "P")
+                {
+                    tcc.result = true;
+                    check = 1;
+                }
+                else if (temp == "N")
+                {
+                    tcc.result = false;
+                    check = 1;
+                }
+                else
+                {
+                    Console.WriteLine("Please type valid result: ");
+                    temp = Console.ReadLine();
+                    check = 0;
+                }
+            } while (check == 0);
+
+            Console.WriteLine("Type the status of the test:\n");
+            string status = Console.ReadLine();
+            tcc.status = status;
+
+            Console.WriteLine("Type the date of the test:\n");
+            string date = Console.ReadLine();
+            tcc.date = date;
+
+            db.Add(tcc);
+            db.SaveChanges();
         }
-        public void createLocation()
+        public void createLocation(MyDBContext db)
         {
             Console.Clear();
             Console.WriteLine("Type in the address for the location:\n");

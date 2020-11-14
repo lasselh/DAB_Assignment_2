@@ -10,7 +10,6 @@ namespace DAB2
 {
     class Program
     {
-        
         static MyDBContext db = new MyDBContext();
 
         static void Main(string[] args)
@@ -31,6 +30,7 @@ namespace DAB2
                     gf.ParseMunicipality(db);
                     gf.GenerateTestCenter(db,100);
                     gf.GenerateCitizens(db,100);
+                    gf.AddCitizenToTestCenter(db, 100);
                     break;
 
                 case 2:
@@ -55,23 +55,23 @@ namespace DAB2
                 switch (choice)
                 {
                     case 1:
-                        cf.createCitizen();
+                        cf.createCitizen(db);
                         break;
 
                     case 2:
-                        cf.createTestCenter();
+                        cf.createTestCenter(db);
                         break;
 
                     case 3:
-                        cf.createManagement();
+                        cf.createManagement(db);
                         break;
 
                     case 4:
-                        cf.createTestCase();
+                        //cf.createTestCase(db);
                         break;
 
                     case 5:
-                        cf.createLocation();
+                        cf.createLocation(db);
                         break;
 
                 }
