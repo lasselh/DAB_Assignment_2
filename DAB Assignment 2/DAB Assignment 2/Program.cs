@@ -43,6 +43,7 @@ namespace DAB2
             choice = 0;
             do
             {
+                Console.Clear();
                 Console.WriteLine("Choose your option... \n" +
                                   " 1: Create Citizen\n" +
                                   " 2: Create Testcenter\n" +
