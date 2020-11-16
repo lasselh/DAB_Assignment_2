@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using DAB2;
 using ConsoleTables;
 using System.IO;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.VisualBasic;
 
 
 namespace DAB2
@@ -24,7 +26,7 @@ namespace DAB2
             Console.WriteLine("Type in citizens age: ");
             int age = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Type in citizens sex: ");
+            Console.WriteLine("Type in citizens sex (male/female): ");
             string sex = Console.ReadLine();
 
             Console.WriteLine("Type in citizens social security number (10 numbers): ");
@@ -33,13 +35,18 @@ namespace DAB2
             Console.Write("Type ID of the municipality the citizen lives in: ");
             int municipalityID = int.Parse(Console.ReadLine());
 
-            var CitizenAdd = new Citizen() { FirstName = Firstname, LastName = Lastname, Age = age, Sex = sex, SocialSecurityNumber = SSN, MunicipalityID = municipalityID };
+            var CitizenAdd = new Citizen()
+            {
+                FirstName = Firstname, LastName = Lastname, Age = age, Sex = sex, SocialSecurityNumber = SSN,
+                MunicipalityID = municipalityID
+            };
 
             db.Add(CitizenAdd);
             db.SaveChanges();
 
             Console.WriteLine("Citizen succesfully added!\n");
         }
+
         public void createTestCenter(MyDBContext db)
         {
             Console.Clear();
@@ -52,13 +59,15 @@ namespace DAB2
             Console.WriteLine("Type the MunicipalityID for the municipality in which the testcenter is: ");
             int municipalityID = int.Parse(Console.ReadLine());
 
-            var TestCenterAdd = new TestCenter() { TestCenterID = TestCenterID, Hours = hours, MunicipalityID = municipalityID };
+            var TestCenterAdd = new TestCenter()
+                {TestCenterID = TestCenterID, Hours = hours, MunicipalityID = municipalityID};
 
             db.Add(TestCenterAdd);
             db.SaveChanges();
 
             Console.WriteLine("TestCenter succesfully added!\n");
         }
+
         public void createManagement(MyDBContext db)
         {
             Console.Clear();
@@ -71,13 +80,15 @@ namespace DAB2
             Console.WriteLine("Type in TestCenterID for the TestCenter that the this Management will manage: ");
             int testcenterid = int.Parse(Console.ReadLine());
 
-            var TestCenterManagementAdd = new TestCenterManagement() { PhoneNumber = phonenumber, Email = email, TestCenterID = testcenterid };
+            var TestCenterManagementAdd = new TestCenterManagement()
+                {PhoneNumber = phonenumber, Email = email, TestCenterID = testcenterid};
 
             db.Add(TestCenterManagementAdd);
             db.SaveChanges();
 
             Console.WriteLine("TestCenterManagement succesfully added!\n");
         }
+
         public void createTestCase(MyDBContext db)
         {
             Console.Clear();
@@ -138,6 +149,7 @@ namespace DAB2
 
             Console.WriteLine("Test Case succesfully added!\n");
         }
+
         public void createLocation(MyDBContext db)
         {
             Console.Clear();
@@ -147,13 +159,14 @@ namespace DAB2
             Console.WriteLine("Type in the Municipality ID for the municipality the location is located in: ");
             int municipalityid = int.Parse(Console.ReadLine());
 
-            var LocationAdd = new Location() { Address = address, MunicipalityID = municipalityid };
+            var LocationAdd = new Location() {Address = address, MunicipalityID = municipalityid};
 
             db.Add(LocationAdd);
             db.SaveChanges();
 
             Console.WriteLine("Location succesfully added!\n");
         }
+
         public void createLocationCitizen(MyDBContext db)
         {
             Console.Clear();
@@ -163,18 +176,19 @@ namespace DAB2
             Console.WriteLine("Type in the Municipality ID for the municipality the location is located in:\n");
             int municipalityid = int.Parse(Console.ReadLine());
 
-            var LocationAdd = new Location() { Address = address, MunicipalityID = municipalityid };
+            var LocationAdd = new Location() {Address = address, MunicipalityID = municipalityid};
 
             db.Add(LocationAdd);
             db.SaveChanges();
 
             Console.WriteLine("Location succesfully added!\n");
         }
+
         public void searchForCitizen(MyDBContext db)
         {
             using (var context = new MyDBContext())
             {
-                Console.WriteLine("Type the name you want to find:\n");
+                Console.WriteLine("Type the name you want to find:");
                 string tempname = Console.ReadLine();
                 var citizen = context.Citizen.Where(c => c.FirstName.Contains(tempname)).ToList();
                 var table = new ConsoleTable("Firstname", "Lastname", "Age", "Sex", "SSN");
@@ -185,8 +199,11 @@ namespace DAB2
                 }
 
                 table.Write();
+                Console.WriteLine("Press any key to end");
+                Console.ReadLine();
             }
         }
+
         public void searchforAge(MyDBContext db)
         {
             using (var context = new MyDBContext())
@@ -202,7 +219,7 @@ namespace DAB2
                                   " 8: 71-80\n" +
                                   " 9: 81-90\n" +
                                   " 0: 91-100\n" +
-                                  " 99: Exit\n");
+                                  " 99: Exit");
 
                 int tempInput = int.Parse(Console.ReadLine());
 
@@ -210,57 +227,76 @@ namespace DAB2
                 switch (tempInput)
                 {
                     case 1:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        var tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 0 && x.citizen.Age <= 10).ToList();
+                        Console.WriteLine("Positive cases for age group 0-10");
+                        var tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 0 && x.citizen.Age <= 10)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 2:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 11 && x.citizen.Age <= 20).ToList();
+                        Console.WriteLine("Positive cases for age group 11-20");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 11 && x.citizen.Age <= 20)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 3:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 21 && x.citizen.Age <= 30).ToList();
+                        Console.WriteLine("Positive cases for age group 21-30");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 21 && x.citizen.Age <= 30)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 4:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 31 && x.citizen.Age <= 40).ToList();
+                        Console.WriteLine("Positive cases for age group 31-40");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 31 && x.citizen.Age <= 40)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 5:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 41 && x.citizen.Age <= 50).ToList();
+                        Console.WriteLine("Positive cases for age group 41-50");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 41 && x.citizen.Age <= 50)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 6:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 51 && x.citizen.Age <= 60).ToList();
+                        Console.WriteLine("Positive cases for age group 51-60");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 51 && x.citizen.Age <= 60)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 7:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 61 && x.citizen.Age <= 70).ToList();
+                        Console.WriteLine("Positive cases for age group 61-70");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 61 && x.citizen.Age <= 70)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 8:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 71 && x.citizen.Age <= 80).ToList();
+                        Console.WriteLine("Positive cases for age group 71-80");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 71 && x.citizen.Age <= 80)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 9:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 81 && x.citizen.Age <= 90).ToList();
+                        Console.WriteLine("Positive cases for age group 81-90");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 81 && x.citizen.Age <= 90)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                     case 0:
-                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
-                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 91 && x.citizen.Age <= 100).ToList();
+                        Console.WriteLine("Positive cases for age group 91-100");
+                        tempresult = context.TestCenterCitizen
+                            .Where(x => x.citizen.Age >= 91 && x.citizen.Age <= 100)
+                            .ToList();
                         tempresult_ = tempresult;
                         break;
                 }
-
 
                 var table = new ConsoleTable("Positive cases");
                 int PositiveCases = 0;
@@ -270,16 +306,102 @@ namespace DAB2
                 {
                     if (C.result == true)
                         PositiveCases++;
-                    else
-                    {
-                        // do nothing;
-                    }
                 }
 
                 table.AddRow(PositiveCases);
 
                 table.Write();
-                Console.WriteLine("press any key to end");
+                Console.WriteLine("Press any key to end");
+                Console.ReadLine();
+            }
+        }
+
+        public void searchforSex(MyDBContext db)
+        {
+            List<TestCenterCitizen> _tempresult = new List<TestCenterCitizen>();
+            using (var context = new MyDBContext())
+            {
+                Console.WriteLine("Type the gender you want to search by (male/female): ");
+                string sex = Console.ReadLine();
+
+                switch (sex)
+                {
+                    case "male":
+                        Console.WriteLine("Positive cases for men");
+                        var tempsex = context.TestCenterCitizen
+                            .Where(c => c.citizen.Sex == "male")
+                            .ToList();
+                        _tempresult = tempsex;
+                        break;
+                    case "female":
+                        Console.WriteLine("Positive cases for women");
+                        tempsex = context.TestCenterCitizen
+                            .Where(c => c.citizen.Sex == "female")
+                            .ToList();
+                        _tempresult = tempsex;
+                        break;
+                }
+
+                var table = new ConsoleTable("Positive cases");
+                int PositiveCases = 0;
+
+                foreach (TestCenterCitizen C in _tempresult)
+                {
+                    if (C.result == true)
+                        PositiveCases++;
+                }
+
+                table.AddRow(PositiveCases);
+                table.Write();
+                Console.WriteLine("Press any key to end");
+                Console.ReadLine();
+            }
+        }
+
+        public void SearchForMunincipality(MyDBContext db)
+        {
+            List<TestCenterCitizen> _tmpresult = new List<TestCenterCitizen>();
+            using (var context = new MyDBContext())
+            {
+                Console.WriteLine("Type the municipalityId you want to see: ");
+                int mid = int.Parse(Console.ReadLine());
+
+                Console.WriteLine($"Positive cases for munincipality {mid}");
+                var tempres = context.TestCenterCitizen
+                    .Where(tcc => tcc.citizen.MunicipalityID == mid).ToList();
+
+                _tmpresult = tempres;
+
+                var table = new ConsoleTable("Active positive cases");
+                int PositiveCases = 0;
+
+                // Får den nuværende dato
+                DateTime dt = DateTime.Now;
+                // Trækker 14 dage fra for at se om den er aktiv
+                dt = dt.AddDays(-14);
+                // Laver det om til en string, formarterer det osv.
+                string date = dt.ToShortDateString();
+                date = date.Replace("-", "");
+                string date1 = date.Substring(0,4);
+                string date2 = date.Substring(6, 2);
+                date = date1 + date2;
+
+                foreach (TestCenterCitizen C in _tmpresult)
+                {
+                    // Formaterer Citizen test casens dato til DateTime og sammenligner med dt
+                    string day = C.date.Substring(0, 2);
+                    string month = C.date.Substring(2, 2);
+                    string year = "20" + C.date.Substring(4, 2);
+                    DateTime citdt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+                    float compare = dt.CompareTo(citdt);
+
+                    if (C.result == true && compare <= 0)
+                        PositiveCases++;
+                }
+
+                table.AddRow(PositiveCases);
+                table.Write();
+                Console.WriteLine("Press any key to end");
                 Console.ReadLine();
             }
         }

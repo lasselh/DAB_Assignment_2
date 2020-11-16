@@ -172,12 +172,17 @@ namespace DAB2
                 tcc.TestCenterID = tcr.TestCenterID;
 
                 int rnum = random.Next(100);
-                if (rnum < 50) {
+                if (rnum < 33) {
                     tcc.result = false;
                     tcc.status = "Not Ready";
                 }
-                else {
+                else if (rnum < 66){
                     tcc.result = true;
+                    tcc.status = "Ready";
+                }
+                else if (rnum <= 100)
+                {
+                    tcc.result = false;
                     tcc.status = "Ready";
                 }
 

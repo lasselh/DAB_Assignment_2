@@ -18,18 +18,23 @@ namespace DAB2
             CreateFunctions cf = new CreateFunctions();
 
             int choice;
+            int choice2;
             bool finished = false;
+            bool finishedSearch = false;
+
+
+            // program start
             Console.WriteLine("Make a choice! \n" +
                               " 1: Add Denmark municipality and random dummy data\n" +
-                              " 2: Empty database\n");
+                              " 2: Empty database");
             choice = Convert.ToInt32(Console.ReadLine());
             switch (choice)
             {
                 case 1:
                     Console.Clear();
                     gf.ParseMunicipality(db);
-                    gf.GenerateTestCenter(db,100);
-                    gf.GenerateCitizens(db,100);
+                    gf.GenerateTestCenter(db, 100);
+                    gf.GenerateCitizens(db, 100);
                     gf.AddCitizenToTestCenter(db, 100);
                     gf.GenerateLocation(db, 100);
                     gf.AddCitizenToLocation(db, 100);
@@ -38,24 +43,21 @@ namespace DAB2
 
                 case 2:
                     Console.Clear();
-                    var results = db.TestCenter.ToList();
-                    Console.WriteLine(results);
                     break;
             }
 
-
-            // Mikkel skriv under den her linje så vi ikke fucking hinanden op 
             choice = 0;
             do
             {
+                Console.Clear();
                 Console.WriteLine("Choose an option... \n" +
                                   " 1: Create Citizen\n" +
-                                  " 2: Create Testcenter\n" +
+                                  " 2: Create Test Center\n" +
                                   " 3: Create Mangement\n" +
                                   " 4: Create Test Case\n" +
                                   " 5: Create Location\n" +
-                                  " 6: Search by name\n" + 
-                                  " 0: Exit\n");
+                                  " 6: Search the database\n" +
+                                  " 0: Exit");
 
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -81,13 +83,38 @@ namespace DAB2
                         break;
 
                     case 6:
-                        cf.searchForCitizen(db);
-                        break;
+                        Console.Clear();
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("What do you want to search by? \n" +
+                                              " 1: Search by name\n" +
+                                              " 2: Search by age groups\n" +
+                                              " 3: Search by gender\n" +
+                                              " 4: Search by municipality\n" +
+                                              " 0: Exit search");
 
-                    case 7:
-                        cf.searchforAge(db);
+                            choice2 = Convert.ToInt32(Console.ReadLine());
+                            switch (choice2)
+                            {
+                                case 1:
+                                    cf.searchForCitizen(db);
+                                    break;
+                                case 2:
+                                    cf.searchforAge(db);
+                                    break;
+                                case 3:
+                                    cf.searchforSex(db);
+                                    break;
+                                case 4:
+                                    cf.SearchForMunincipality(db);
+                                    break;
+                                case 0:
+                                    finishedSearch = true;
+                                    break;
+                            }
+                        } while (finishedSearch == false);
                         break;
-
                     case 0:
                         finished = true;
                         break;
@@ -97,33 +124,3 @@ namespace DAB2
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//var cit = new Citizen();
-//cit.FirstName = "Mikke";
-//cit.LastName = "bøsse";
-//cit.SocialSecurityNumber = 1234;
-//cit.MunicipalityID = 1234;
-//cit.Age = 12;
-//cit.Sex = "Male";
-//cit.municipality = new Municipality();
-//cit.locationCitizens = new List<LocationCitizen>();
-//cit.testCenterCitizens = new List<TestCenterCitizen>();
-
-//db.Add(cit);
-//db.SaveChanges();

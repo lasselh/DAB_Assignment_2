@@ -18,7 +18,7 @@ namespace DAB2 // lasse er lort, håber ikke du kan pull det her
         public DbSet<TestCenterCitizen> TestCenterCitizen { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=C:\\Users\\mikke\\Documents\\GitHub\\Dab_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\MyDBContext.db");
+            => options.UseSqlite("Data Source=C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\MyDBContext.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
