@@ -18,10 +18,10 @@ namespace DAB2
             CreateFunctions cf = new CreateFunctions();
 
             int choice;
+            bool finished = false;
             Console.WriteLine("Make a choice! \n" +
-                              " 1: Add Denmark municipality and random dummy citizens\n" +
-                              " 2: Empty database\n" +
-                              "Enter number: ");
+                              " 1: Add Denmark municipality and random dummy data\n" +
+                              " 2: Empty database\n");
             choice = Convert.ToInt32(Console.ReadLine());
             switch (choice)
             {
@@ -31,10 +31,15 @@ namespace DAB2
                     gf.GenerateTestCenter(db,100);
                     gf.GenerateCitizens(db,100);
                     gf.AddCitizenToTestCenter(db, 100);
+                    gf.GenerateLocation(db, 100);
+                    gf.AddCitizenToLocation(db, 100);
+                    gf.GenerateTestCenterManagement(db, 100);
                     break;
 
                 case 2:
                     Console.Clear();
+                    var results = db.TestCenter.ToList();
+                    Console.WriteLine(results);
                     break;
             }
 
@@ -43,13 +48,13 @@ namespace DAB2
             choice = 0;
             do
             {
-                Console.Clear();
-                Console.WriteLine("Choose your option... \n" +
+                Console.WriteLine("Choose an option... \n" +
                                   " 1: Create Citizen\n" +
                                   " 2: Create Testcenter\n" +
                                   " 3: Create Mangement\n" +
                                   " 4: Create Test Case\n" +
-                                  " 5: Create Location\n");
+                                  " 5: Create Location\n" +
+                                  " 0: Exit\n");
 
                 choice = Convert.ToInt32(Console.ReadLine());
                 switch (choice)
@@ -67,16 +72,18 @@ namespace DAB2
                         break;
 
                     case 4:
-                        //cf.createTestCase(db);
+                        cf.createTestCase(db);
                         break;
 
                     case 5:
                         cf.createLocation(db);
                         break;
-
+                    case 0:
+                        finished = true;
+                        break;
                 }
 
-            } while (true);
+            } while (finished == false);
         }
     }
 }

@@ -40,8 +40,18 @@ namespace DAB2 // lasse er lort, håber ikke du kan pull det her
             modelBuilder.Entity<Location>()
                 .HasKey(L => L.Address);
 
-            // defining relationships
+            modelBuilder.Entity<TestCenterCitizen>()
+                .HasKey(tcc => new { tcc.SocialSecurityNumber, tcc.TestCenterID });
 
+            modelBuilder.Entity<LocationCitizen>()
+                .HasKey(lcc => new { lcc.SocialSecurityNumber, lcc.Address });
+
+            //modelBuilder.Entity<TestCenterCitizen>(entity =>
+            //{
+            //    entity.ToView("Names");
+            //});
+
+            // defining relationships
             modelBuilder.Entity<TestCenterManagement>()
                 .HasOne(TCM => TCM.testcenter)
                 .WithOne(TC => TC.testcentermanagement)
@@ -86,12 +96,6 @@ namespace DAB2 // lasse er lort, håber ikke du kan pull det her
                 .HasMany(M => M.TestCenters)
                 .WithOne(TC => TC.municipality)
                 .HasForeignKey(TCID => TCID.MunicipalityID);
-                
-
-
-
-
         }
-
     }
 }

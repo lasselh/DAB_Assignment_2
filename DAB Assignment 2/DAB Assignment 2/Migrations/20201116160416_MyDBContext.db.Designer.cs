@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAB_Assignment_2.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20201114150111_MyDBContext.db")]
+    [Migration("20201116160416_MyDBContext.db")]
     partial class MyDBContextdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace DAB_Assignment_2.Migrations
                     b.Property<string>("date")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SocialSecurityNumber");
+                    b.HasKey("SocialSecurityNumber", "Address");
 
                     b.HasIndex("Address");
 
@@ -145,7 +145,7 @@ namespace DAB_Assignment_2.Migrations
                     b.Property<string>("status")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SocialSecurityNumber");
+                    b.HasKey("SocialSecurityNumber", "TestCenterID");
 
                     b.HasIndex("TestCenterID");
 
@@ -198,7 +198,9 @@ namespace DAB_Assignment_2.Migrations
                 {
                     b.HasOne("DAB2.Location", "location")
                         .WithMany("locationCitizens")
-                        .HasForeignKey("Address");
+                        .HasForeignKey("Address")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAB2.Citizen", "citizen")
                         .WithMany("locationCitizens")

@@ -68,7 +68,7 @@ namespace DAB_Assignment_2.Migrations
                     b.Property<string>("date")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SocialSecurityNumber");
+                    b.HasKey("SocialSecurityNumber", "Address");
 
                     b.HasIndex("Address");
 
@@ -143,7 +143,7 @@ namespace DAB_Assignment_2.Migrations
                     b.Property<string>("status")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SocialSecurityNumber");
+                    b.HasKey("SocialSecurityNumber", "TestCenterID");
 
                     b.HasIndex("TestCenterID");
 
@@ -196,7 +196,9 @@ namespace DAB_Assignment_2.Migrations
                 {
                     b.HasOne("DAB2.Location", "location")
                         .WithMany("locationCitizens")
-                        .HasForeignKey("Address");
+                        .HasForeignKey("Address")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DAB2.Citizen", "citizen")
                         .WithMany("locationCitizens")

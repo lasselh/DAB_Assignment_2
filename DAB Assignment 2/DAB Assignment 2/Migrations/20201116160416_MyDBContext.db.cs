@@ -103,12 +103,12 @@ namespace DAB_Assignment_2.Migrations
                 columns: table => new
                 {
                     SocialSecurityNumber = table.Column<string>(type: "TEXT", nullable: false),
-                    Address = table.Column<string>(type: "TEXT", nullable: true),
+                    Address = table.Column<string>(type: "TEXT", nullable: false),
                     date = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LocationCitizen", x => x.SocialSecurityNumber);
+                    table.PrimaryKey("PK_LocationCitizen", x => new { x.SocialSecurityNumber, x.Address });
                     table.ForeignKey(
                         name: "FK_LocationCitizen_Citizen_SocialSecurityNumber",
                         column: x => x.SocialSecurityNumber,
@@ -120,7 +120,7 @@ namespace DAB_Assignment_2.Migrations
                         column: x => x.Address,
                         principalTable: "Location",
                         principalColumn: "Address",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,7 +135,7 @@ namespace DAB_Assignment_2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestCenterCitizen", x => x.SocialSecurityNumber);
+                    table.PrimaryKey("PK_TestCenterCitizen", x => new { x.SocialSecurityNumber, x.TestCenterID });
                     table.ForeignKey(
                         name: "FK_TestCenterCitizen_Citizen_SocialSecurityNumber",
                         column: x => x.SocialSecurityNumber,

@@ -11,7 +11,7 @@ namespace DAB2
     class GenerateFunctions
     {
         ////////////////////////////////////////////////
-        // Hjælpefunktioner hugget fra Henriks github //
+        // Hjælpefunktioner taget fra Henriks github  //
         ////////////////////////////////////////////////
         static string[] Firstnames = new string[] {
             "Hans", "Jens", "Henrik", "Jesper", "Morten", "Mathias", "Alice", "Bob", "Mette", "Lene", "Hanne", "Lise", "Lise", "Mikkel", "Lasse", "Mathias"
@@ -42,6 +42,7 @@ namespace DAB2
         ////////////////////////////////////////////////
         
 
+        // Genererer alle municipality/kommuner i dk og laver en Nation "Danmark".
         public List<int> Municipalities = new List<int>();
         public void ParseMunicipality(MyDBContext db)
         {
@@ -73,7 +74,7 @@ namespace DAB2
             }
             reader.Close();
         }
-
+        // Genererer et antal tilfældige citizens, default 100.
         /// <summary>
         /// fuck en nice måde at lave kommentarer på tester123
         /// </summary>
@@ -104,6 +105,7 @@ namespace DAB2
             }
         }
 
+        // Genererer et antal tilfældige testcentre
         public void GenerateTestCenter(MyDBContext db, int number = 100)
         {
             for (int i = 1; i < (number + 1); i++)
@@ -120,6 +122,41 @@ namespace DAB2
             }
         }
 
+        // Genererer et antal tilfældige lokationer
+        public void GenerateLocation(MyDBContext db, int number = 100)
+        {
+            for (int i = 1; i < (number + 1); i++)
+            {
+                var location = new Location();
+                location.Address = "Vejnavn " + i.ToString();
+
+                var temp = random.Next(Municipalities.Count);
+                location.MunicipalityID = Municipalities[temp];
+
+                db.Add(location);
+                db.SaveChanges();
+            }
+        }
+
+        // Genererer et antal tilfældige TestCenterManagements
+        public void GenerateTestCenterManagement(MyDBContext db, int number = 100)
+        {
+            for (int i = 1; i < (number + 1); i++)
+            {
+                var tcm = new TestCenterManagement();
+                tcm.PhoneNumber = 10000000 + i;
+                tcm.Email = "random@mail" + i.ToString() + ".dk";
+
+                var temp = random.Next(Municipalities.Count);
+                tcm.TestCenterID = i;
+
+                db.Add(tcm);
+                db.SaveChanges();
+            }
+        }
+
+        // Udfylder skyggetabellen TestCenterCitizen, binder tilfældige citizens til tilfældige testcentre
+        // Kræver at der allerede er Citizens og TestCenter i databasen
         public void AddCitizenToTestCenter(MyDBContext db, int number = 100)
         {
             for (int i = 0; i < number; i++)
@@ -147,6 +184,29 @@ namespace DAB2
                 tcc.date = $"{getDate()}{getMonth()}{getYear(0)}";
 
                 db.Add(tcc);
+                db.SaveChanges();
+            }
+        }
+
+        // Udfylder LocationCitizen skyggetabellen, binder tilfældige citizens til tilfældige lokationer
+        // Kræver at der allerede er Citizens og TestCenter i databasen
+        public void AddCitizenToLocation(MyDBContext db, int number = 100)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                int rcit = random.Next(db.Citizen.Count());
+                int rloc = random.Next(db.Location.Count());
+
+                var cit = db.Citizen.OrderBy(c => c.SocialSecurityNumber).Skip(i).Take(1).FirstOrDefault();
+                var loc = db.Location.OrderBy(c => c.Address).Skip(i).Take(1).FirstOrDefault();
+
+                var lcc = new LocationCitizen();
+                lcc.SocialSecurityNumber = cit.SocialSecurityNumber;
+                lcc.Address = loc.Address;
+
+                lcc.date = $"{getDate()}{getMonth()}{getYear(0)}";
+
+                db.Add(lcc);
                 db.SaveChanges();
             }
         }

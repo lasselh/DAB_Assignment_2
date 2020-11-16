@@ -16,6 +16,5 @@ namespace DAB2
         public Municipality municipality { get; set; }
 
         public int MunicipalityID { get; set; }
-
     }
 }
