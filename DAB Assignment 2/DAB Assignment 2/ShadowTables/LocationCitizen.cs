@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DAB2
 {
+    [Table("LocationCitizen")]
     public class LocationCitizen
     {
         [Key]

@@ -56,7 +56,8 @@ namespace DAB2
                                   " 3: Create Mangement\n" +
                                   " 4: Create Test Case\n" +
                                   " 5: Create Location\n" +
-                                  " 6: Search the database\n" +
+                                  " 6: Create LocationCitizen\n" +
+                                  " 7: Search the database\n" +
                                   " 0: Exit");
 
                 choice = Convert.ToInt32(Console.ReadLine());
@@ -81,8 +82,11 @@ namespace DAB2
                     case 5:
                         cf.createLocation(db);
                         break;
-
                     case 6:
+                        cf.createLocationCitizen(db);
+                        break;
+
+                    case 7:
                         Console.Clear();
                         do
                         {

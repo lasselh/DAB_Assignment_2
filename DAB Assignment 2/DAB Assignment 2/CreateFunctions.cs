@@ -109,6 +109,16 @@ namespace DAB2
             tcc.TestCenterID = tcr.TestCenterID;
 
             Console.Clear();
+            Console.WriteLine("Type the date of the test (ddmmyy): ");
+            string date12 = Console.ReadLine();
+            tcc.date = date12;
+
+            Console.Clear();
+            Console.WriteLine("Type the status of the test (Not Tested, Not Ready, Ready): ");
+            string status = Console.ReadLine();
+            tcc.status = status;
+
+            Console.Clear();
             Console.WriteLine("Type the test result: \n" +
                               "'P' for positive\n" +
                               "'N' for negative/unknown\n");
@@ -120,6 +130,82 @@ namespace DAB2
                 {
                     tcc.result = true;
                     check = 1;
+
+                    using (var context = new MyDBContext())
+                    {
+                        var tmpresult = context.LocationCitizen.Where(x => x.SocialSecurityNumber == ssn).ToList();
+
+                        foreach (LocationCitizen loccit in tmpresult)
+                        {
+                            var adress = loccit.Address;
+                            var tmp2 = context.LocationCitizen.Where(x => x.Address == adress).ToList();
+
+                            string day1 = loccit.date.Substring(0, 2);
+                            string month1 = loccit.date.Substring(2, 2);
+                            string year1 = "20" + loccit.date.Substring(4, 2);
+                            DateTime teststring = new DateTime(int.Parse(year1), int.Parse(month1), int.Parse(day1));
+
+                            // Får den nuværende dato
+                            DateTime dt = DateTime.Now;
+
+                            Console.WriteLine(dt);
+
+                            DateTime dt1;
+                            DateTime dt2;
+                            DateTime dt3;
+                            // Trækker 3 dage fra for at se om den er aktiv
+                            dt1 = dt.AddDays(-3);
+                            dt2 = dt.AddDays(-2);
+                            dt3 = dt.AddDays(-1);
+
+                            // Fjerner timer/minutter/sekunder fra DateTime
+                            string stringdt1 = dt1.ToShortDateString();
+                            dt1 = Convert.ToDateTime(stringdt1);
+                            string stringdt2 = dt2.ToShortDateString();
+                            dt2 = Convert.ToDateTime(stringdt2);
+                            string stringdt3 = dt3.ToShortDateString();
+                            dt3 = Convert.ToDateTime(stringdt3);
+
+                            var table = new ConsoleTable("People who MIGHT be infected");
+
+                            foreach (LocationCitizen C in tmp2)
+                            {
+                                // Formaterer Citizen test casens dato til DateTime og sammenligner med dt
+                                string day = C.date.Substring(0, 2);
+                                string month = C.date.Substring(2, 2);
+                                string year = "20" + C.date.Substring(4, 2);
+                                DateTime citdt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+                                float compare = teststring.CompareTo(citdt);
+                                float compare1 = dt1.CompareTo(citdt);
+                                float compare2 = dt2.CompareTo(citdt);
+                                float compare3 = dt3.CompareTo(citdt);
+
+                                Console.WriteLine($"citdt er: {citdt}");
+
+                                Console.WriteLine($"teststring er: {teststring}");
+
+                                Console.WriteLine($"dt1 er: {dt1}");
+                                Console.WriteLine(compare1);
+
+                                Console.WriteLine($"dt2 er: {dt2}");
+                                Console.WriteLine(compare2);
+
+                                Console.WriteLine($"dt3 er: {dt3}");
+                                Console.WriteLine(compare3);
+
+                                if (compare <= 0)
+                                {
+                                    if (C.SocialSecurityNumber != ssn)
+                                    {
+                                        table.AddRow(C.SocialSecurityNumber);
+                                    }
+                                }
+                            }
+                            table.Write();
+                            Console.WriteLine("Press any key to end");
+                            Console.ReadLine();
+                        }
+                    }
                 }
                 else if (temp == "N")
                 {
@@ -133,16 +219,6 @@ namespace DAB2
                     check = 0;
                 }
             } while (check == 0);
-
-            Console.Clear();
-            Console.WriteLine("Type the status of the test (Not Tested, Not Ready, Ready): ");
-            string status = Console.ReadLine();
-            tcc.status = status;
-
-            Console.Clear();
-            Console.WriteLine("Type the date of the test (ddmmyy): ");
-            string date = Console.ReadLine();
-            tcc.date = date;
 
             db.Add(tcc);
             db.SaveChanges();
@@ -170,15 +246,18 @@ namespace DAB2
         public void createLocationCitizen(MyDBContext db)
         {
             Console.Clear();
-            Console.WriteLine("Type in the address for the location:\n");
+            Console.WriteLine("Type in the address for the location: ");
             string address = Console.ReadLine();
 
-            Console.WriteLine("Type in the Municipality ID for the municipality the location is located in:\n");
-            int municipalityid = int.Parse(Console.ReadLine());
+            Console.WriteLine("Type in the SocialSecurityNumber for the citizen: ");
+            string ssn = (Console.ReadLine());
 
-            var LocationAdd = new Location() {Address = address, MunicipalityID = municipalityid};
+            Console.WriteLine("Type in the date ");
+            string date = (Console.ReadLine());
 
-            db.Add(LocationAdd);
+            var LocationCitizenAdd = new LocationCitizen() {Address = address, SocialSecurityNumber = ssn, date = date};
+
+            db.Add(LocationCitizenAdd);
             db.SaveChanges();
 
             Console.WriteLine("Location succesfully added!\n");
@@ -380,11 +459,11 @@ namespace DAB2
                 // Trækker 14 dage fra for at se om den er aktiv
                 dt = dt.AddDays(-14);
                 // Laver det om til en string, formarterer det osv.
-                string date = dt.ToShortDateString();
-                date = date.Replace("-", "");
-                string date1 = date.Substring(0,4);
-                string date2 = date.Substring(6, 2);
-                date = date1 + date2;
+                //string date = dt.ToShortDateString();
+                //date = date.Replace("-", "");
+                //string date1 = date.Substring(0,4);
+                //string date2 = date.Substring(6, 2);
+                //date = date1 + date2;
 
                 foreach (TestCenterCitizen C in _tmpresult)
                 {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace DAB2 // lasse er lort, håber ikke du kan pull det her
+namespace DAB2 
 {
     public class MyDBContext : DbContext
     {
@@ -16,6 +16,7 @@ namespace DAB2 // lasse er lort, håber ikke du kan pull det her
         public DbSet<Location> Location { get; set; }
         public DbSet<Nation> Nation { get; set; }
         public DbSet<TestCenterCitizen> TestCenterCitizen { get; set; }
+        public DbSet<LocationCitizen> LocationCitizen { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite("Data Source=C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\MyDBContext.db");
@@ -46,11 +47,6 @@ namespace DAB2 // lasse er lort, håber ikke du kan pull det her
 
             modelBuilder.Entity<LocationCitizen>()
                 .HasKey(lcc => new { lcc.SocialSecurityNumber, lcc.Address });
-
-            //modelBuilder.Entity<TestCenterCitizen>(entity =>
-            //{
-            //    entity.ToView("Names");
-            //});
 
             // defining relationships
             modelBuilder.Entity<TestCenterManagement>()
