@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using DAB2;
+using ConsoleTables;
+using System.IO;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+
 
 namespace DAB2
 {
@@ -149,7 +154,6 @@ namespace DAB2
 
             Console.WriteLine("Location succesfully added!\n");
         }
-
         public void createLocationCitizen(MyDBContext db)
         {
             Console.Clear();
@@ -165,6 +169,119 @@ namespace DAB2
             db.SaveChanges();
 
             Console.WriteLine("Location succesfully added!\n");
+        }
+        public void searchForCitizen(MyDBContext db)
+        {
+            using (var context = new MyDBContext())
+            {
+                Console.WriteLine("Type the name you want to find:\n");
+                string tempname = Console.ReadLine();
+                var citizen = context.Citizen.Where(c => c.FirstName.Contains(tempname)).ToList();
+                var table = new ConsoleTable("Firstname", "Lastname", "Age", "Sex", "SSN");
+
+                foreach (Citizen C in citizen)
+                {
+                    table.AddRow(C.FirstName, C.LastName, C.Age, C.Sex, C.SocialSecurityNumber);
+                }
+
+                table.Write();
+            }
+        }
+        public void searchforAge(MyDBContext db)
+        {
+            using (var context = new MyDBContext())
+            {
+                Console.WriteLine("Choose an age group to show amount of positive cases \n" +
+                                  " 1: 0-10\n" +
+                                  " 2: 11-20\n" +
+                                  " 3: 21-30\n" +
+                                  " 4: 31-40\n" +
+                                  " 5: 41-50\n" +
+                                  " 6: 51-60\n" +
+                                  " 7: 61-70\n" +
+                                  " 8: 71-80\n" +
+                                  " 9: 81-90\n" +
+                                  " 0: 91-100\n" +
+                                  " 99: Exit\n");
+
+                int tempInput = int.Parse(Console.ReadLine());
+
+                List<TestCenterCitizen> tempresult_ = new List<TestCenterCitizen>();
+                switch (tempInput)
+                {
+                    case 1:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        var tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 0 && x.citizen.Age <= 10).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 2:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 11 && x.citizen.Age <= 20).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 3:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 21 && x.citizen.Age <= 30).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 4:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 31 && x.citizen.Age <= 40).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 5:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 41 && x.citizen.Age <= 50).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 6:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 51 && x.citizen.Age <= 60).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 7:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 61 && x.citizen.Age <= 70).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 8:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 71 && x.citizen.Age <= 80).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 9:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 81 && x.citizen.Age <= 90).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                    case 0:
+                        Console.WriteLine("Chose the age-group to see active Covid cases for:\n");
+                        tempresult = context.TestCenterCitizen.Where(x => x.citizen.Age >= 91 && x.citizen.Age <= 100).ToList();
+                        tempresult_ = tempresult;
+                        break;
+                }
+
+
+                var table = new ConsoleTable("Positive cases");
+                int PositiveCases = 0;
+
+
+                foreach (TestCenterCitizen C in tempresult_)
+                {
+                    if (C.result == true)
+                        PositiveCases++;
+                    else
+                    {
+                        // do nothing;
+                    }
+                }
+
+                table.AddRow(PositiveCases);
+
+                table.Write();
+                Console.WriteLine("press any key to end");
+                Console.ReadLine();
+            }
         }
     }
 }

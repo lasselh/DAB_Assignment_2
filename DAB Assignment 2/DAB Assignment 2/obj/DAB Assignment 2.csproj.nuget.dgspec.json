@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj": {}
+    "C:\\Users\\mikke\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj": {
+    "C:\\Users\\mikke\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
+        "projectUniqueName": "C:\\Users\\mikke\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
         "projectName": "DAB Assignment 2",
-        "projectPath": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
-        "packagesPath": "C:\\Users\\Premi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\obj\\",
+        "projectPath": "C:\\Users\\mikke\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
+        "packagesPath": "C:\\Users\\mikke\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mikke\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Premi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\mikke\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,6 +38,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "ConsoleTables": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",

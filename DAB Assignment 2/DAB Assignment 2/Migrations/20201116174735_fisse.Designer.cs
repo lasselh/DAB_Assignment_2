@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAB_Assignment_2.Migrations
 {
     [DbContext(typeof(MyDBContext))]
-    [Migration("20201116160416_MyDBContext.db")]
-    partial class MyDBContextdb
+    [Migration("20201116174735_fisse")]
+    partial class fisse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -2,7 +2,7 @@
 
 namespace DAB_Assignment_2.Migrations
 {
-    public partial class MyDBContextdb : Migration
+    public partial class fisse : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
