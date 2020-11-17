@@ -53,7 +53,7 @@ namespace DAB2
                 Console.WriteLine("Choose an option... \n" +
                                   " 1: Create Citizen\n" +
                                   " 2: Create Test Center\n" +
-                                  " 3: Create Mangement\n" +
+                                  " 3: Create Management\n" +
                                   " 4: Create Test Case\n" +
                                   " 5: Create Location\n" +
                                   " 6: Create LocationCitizen\n" +

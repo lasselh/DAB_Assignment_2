@@ -140,70 +140,62 @@ namespace DAB2
                             var adress = loccit.Address;
                             var tmp2 = context.LocationCitizen.Where(x => x.Address == adress).ToList();
 
+                            // Får den nuværende dato
+                            DateTime dt = DateTime.Now;
+                            DateTime dt3days = dt.AddDays(-3);
+
+                            // Får den smittede persons dato
                             string day1 = loccit.date.Substring(0, 2);
                             string month1 = loccit.date.Substring(2, 2);
                             string year1 = "20" + loccit.date.Substring(4, 2);
-                            DateTime teststring = new DateTime(int.Parse(year1), int.Parse(month1), int.Parse(day1));
+                            DateTime infectdt = new DateTime(int.Parse(year1), int.Parse(month1), int.Parse(day1));
 
-                            // Får den nuværende dato
-                            DateTime dt = DateTime.Now;
-
+                            float compareStart = infectdt.CompareTo(dt3days);
                             Console.WriteLine(dt);
-
-                            DateTime dt1;
-                            DateTime dt2;
-                            DateTime dt3;
-                            // Trækker 3 dage fra for at se om den er aktiv
-                            dt1 = dt.AddDays(-3);
-                            dt2 = dt.AddDays(-2);
-                            dt3 = dt.AddDays(-1);
-
-                            // Fjerner timer/minutter/sekunder fra DateTime
-                            string stringdt1 = dt1.ToShortDateString();
-                            dt1 = Convert.ToDateTime(stringdt1);
-                            string stringdt2 = dt2.ToShortDateString();
-                            dt2 = Convert.ToDateTime(stringdt2);
-                            string stringdt3 = dt3.ToShortDateString();
-                            dt3 = Convert.ToDateTime(stringdt3);
-
-                            var table = new ConsoleTable("People who MIGHT be infected");
-
-                            foreach (LocationCitizen C in tmp2)
+                            Console.WriteLine(infectdt);
+                            if (compareStart <= 0)
                             {
-                                // Formaterer Citizen test casens dato til DateTime og sammenligner med dt
-                                string day = C.date.Substring(0, 2);
-                                string month = C.date.Substring(2, 2);
-                                string year = "20" + C.date.Substring(4, 2);
-                                DateTime citdt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
-                                float compare = teststring.CompareTo(citdt);
-                                float compare1 = dt1.CompareTo(citdt);
-                                float compare2 = dt2.CompareTo(citdt);
-                                float compare3 = dt3.CompareTo(citdt);
+                                DateTime dt1;
+                                DateTime dt2;
+                                DateTime dt3;
+                                // Trækker 3 dage fra for at se om den er aktiv
+                                dt1 = dt.AddDays(-1);
+                                dt2 = dt.AddDays(-2);
+                                dt3 = dt.AddDays(-3);
+                                // Fjerner timer/minutter/sekunder fra DateTime
+                                string stringdt1 = dt1.ToShortDateString();
+                                dt1 = Convert.ToDateTime(stringdt1);
+                                string stringdt2 = dt2.ToShortDateString();
+                                dt2 = Convert.ToDateTime(stringdt2);
+                                string stringdt3 = dt3.ToShortDateString();
+                                dt3 = Convert.ToDateTime(stringdt3);
 
-                                Console.WriteLine($"citdt er: {citdt}");
+                                var table = new ConsoleTable("People who MIGHT be infected");
 
-                                Console.WriteLine($"teststring er: {teststring}");
-
-                                Console.WriteLine($"dt1 er: {dt1}");
-                                Console.WriteLine(compare1);
-
-                                Console.WriteLine($"dt2 er: {dt2}");
-                                Console.WriteLine(compare2);
-
-                                Console.WriteLine($"dt3 er: {dt3}");
-                                Console.WriteLine(compare3);
-
-                                if (compare <= 0)
+                                foreach (LocationCitizen C in tmp2)
                                 {
-                                    if (C.SocialSecurityNumber != ssn)
+
+                                    // Formaterer Citizen dato til DateTime og sammenligner med dt1/2/3
+                                    string day = C.date.Substring(0, 2);
+                                    string month = C.date.Substring(2, 2);
+                                    string year = "20" + C.date.Substring(4, 2);
+                                    DateTime citdt = new DateTime(int.Parse(year), int.Parse(month), int.Parse(day));
+                                    float compare1 = dt1.CompareTo(citdt);
+                                    float compare2 = dt2.CompareTo(citdt);
+                                    float compare3 = dt3.CompareTo(citdt);
+
+                                    if (compare1 == 0 || compare2 == 0 || compare3 == 0)
                                     {
-                                        table.AddRow(C.SocialSecurityNumber);
+                                        if (C.SocialSecurityNumber != ssn)
+                                        {
+                                            table.AddRow(C.SocialSecurityNumber);
+                                        }
                                     }
                                 }
+                                table.Write();
+                                Console.WriteLine("Press any key to end");
+                                Console.ReadLine();
                             }
-                            table.Write();
-                            Console.WriteLine("Press any key to end");
-                            Console.ReadLine();
                         }
                     }
                 }
@@ -459,11 +451,11 @@ namespace DAB2
                 // Trækker 14 dage fra for at se om den er aktiv
                 dt = dt.AddDays(-14);
                 // Laver det om til en string, formarterer det osv.
-                //string date = dt.ToShortDateString();
-                //date = date.Replace("-", "");
-                //string date1 = date.Substring(0,4);
-                //string date2 = date.Substring(6, 2);
-                //date = date1 + date2;
+                string date = dt.ToShortDateString();
+                date = date.Replace("-", "");
+                string date1 = date.Substring(0, 4);
+                string date2 = date.Substring(6, 2);
+                date = date1 + date2;
 
                 foreach (TestCenterCitizen C in _tmpresult)
                 {
