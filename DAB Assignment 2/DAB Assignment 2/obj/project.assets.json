@@ -1847,11 +1847,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
+      "projectUniqueName": "C:\\Users\\Premi\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
       "projectName": "DAB Assignment 2",
-      "projectPath": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
+      "projectPath": "C:\\Users\\Premi\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\DAB Assignment 2.csproj",
       "packagesPath": "C:\\Users\\Premi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Premi\\Downloads\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\obj\\",
+      "outputPath": "C:\\Users\\Premi\\Documents\\GitHub\\DAB_Assignment_2\\DAB Assignment 2\\DAB Assignment 2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Premi\\AppData\\Roaming\\NuGet\\NuGet.Config",
